@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<link rel="stylesheet" href="bonito.css">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Ti ❤️</title>
+
+
+
+</head>
+
+<body>
+
+    <!-- MUSICA -->
+    <audio id="musica">
+        <source src="musica2.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- PANTALLA SORPRESA -->
+    <div id="sorpresa">
+        <h1>💖 Tengo algo para ti 💖</h1>
+        <button onclick="iniciar()">Descúbrelo ✨</button>
+    </div>
+
+    <!-- CONTENIDO -->
+    <div id="contenido">
+        <div class="tarjeta">
+            <h2>Para el amor de mi vida ❤️</h2>
+            <p>
+                Cada momento contigo es mi lugar favorito.
+                Gracias por existir y hacer mi mundo más bonito.
+            </p>
+
+            <!-- FOTOS -->
+            <div class="galeria">
+                <img src="img/imagen1.jpeg">
+                <img src="img/imagen2.jpeg">
+                <img src="img/imagen3.jpeg  ">
+            </div>
+
+            <!-- MENSAJE SECRETO CON CONTRASEÑA -->
+            <button onclick="abrirSecreto()">Mensaje secreto 🔐</button>
+
+            <div id="bloqueSecreto" style="display:none; margin-top:15px;">
+                <p>nuestra palabra mas usada es?💕</p>
+                <input id="clave" type="password" placeholder="Contraseña"
+                    style="padding:10px;border-radius:20px;border:1px solid #ccc;text-align:center;">
+                <br>
+                <button onclick="verificarClave()">Desbloquear 💖</button>
+
+                <div id="secreto">
+                    Pase lo que pase, siempre te elegiría a ti 💘
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="panelLetras">
+        <p id="lineaActual"></p>
+    </div>
+
+    <script>
+        /* ===== INICIAR ===== */
+        function iniciar() {
+            document.getElementById("sorpresa").style.display = "none";
+            document.getElementById("contenido").style.display = "flex";
+            document.getElementById("musica").play();
+            crearCorazones();
+        }
+
+        /* ===== MENSAJE SECRETO ===== */
+        function mostrarSecreto() {
+            document.getElementById("secreto").style.display = "block";
+        }
+
+        /* ===== CORAZONES ===== */
+        function crearCorazones() {
+            setInterval(() => {
+                const corazon = document.createElement("div");
+                corazon.className = "corazon";
+                corazon.innerHTML = "❤️";
+                corazon.style.left = Math.random() * 100 + "vw";
+                corazon.style.fontSize = (Math.random() * 20 + 15) + "px";
+                document.body.appendChild(corazon);
+
+                setTimeout(() => corazon.remove(), 6000);
+            }, 300);
+        }
+    </script>
+    <script>
+        function iniciar() {
+            document.getElementById("sorpresa").style.display = "none";
+            document.getElementById("contenido").style.display = "flex";
+            document.getElementById("musica").play();
+            corazones();
+            destellos();
+        }
+
+        function mostrarSecreto() {
+            document.getElementById("secreto").style.display = "block";
+        }
+
+        /* Corazones con colores y tamaños */
+        function corazones() {
+            setInterval(() => {
+                const c = document.createElement("div");
+                c.className = "corazon";
+                c.innerHTML = ["❤️", "💖", "💘", "💕"][Math.floor(Math.random() * 4)];
+                c.style.left = Math.random() * 100 + "vw";
+                c.style.fontSize = (Math.random() * 22 + 14) + "px";
+                c.style.color = ["#ff4d6d", "#ffd166", "#b5179e", "#ff7eb3"][Math.floor(Math.random() * 4)];
+                document.body.appendChild(c);
+                setTimeout(() => c.remove(), 7000);
+            }, 260);
+        }
+
+        /* Destellos suaves */
+        function destellos() {
+            setInterval(() => {
+                const d = document.createElement("div");
+                d.className = "destello";
+                d.style.left = Math.random() * 100 + "vw";
+                d.style.top = Math.random() * 100 + "vh";
+                document.body.appendChild(d);
+                setTimeout(() => d.remove(), 2000);
+            }, 420);
+        }
+
+    </script>
+    <script>
+        /* Tap en fotos */
+        document.querySelectorAll('.galeria img').forEach(img => {
+            img.addEventListener('click', () => {
+                img.classList.add('activa');
+                setTimeout(() => img.classList.remove('activa'), 700);
+            });
+        });
+    </script>
+    <script>
+        const letras = [
+            { t: 1, txt: "nose ingles pero podria aprender para escuchar a tu corazon❤️" },
+            { t: 34, txt: "saltaste desde puentes que se caian" },
+            { t: 37, txt: "viendo los paisajes de la ciudad volverse polvo" },
+            { t: 44, txt: "filmando helicopteros estrellandose en el oceano" },
+            { t: 48, txt: "desde muy arriba" },
+            { t: 55, txt: "llevas la musica dentro de ti,cariño,dime porque?" },
+            { t: 60, txt: "llevas la musica dentro de ti,cariño,dime porque?" }
+        ];
+
+        let indice = 0;
+        const audio = document.getElementById("musica");
+        const linea = document.getElementById("lineaActual");
+        const panel = document.getElementById("panelLetras");
+
+        /* Llamar cuando la contraseña sea correcta */
+
+
+        function onSecretoDesbloqueado() {
+            panel.style.display = "block";
+            indice = 0;
+
+            linea.textContent = "";
+            linea.style.opacity = "0";
+
+            audio.currentTime = 0; // reinicia canción
+            audio.play();          // asegura reproducción
+        }
+
+
+
+
+
+
+        /* Sincronización */
+        let finalMostrado = false;
+
+        audio.addEventListener("timeupdate", () => {
+            if (indice < letras.length && audio.currentTime >= letras[indice].t) {
+                linea.classList.remove("nuevaLinea");
+                void linea.offsetWidth;
+                escribirLetraPorLetra(letras[indice].txt, linea, 55);
+                linea.classList.add("nuevaLinea");
+                indice++;
+
+                if (indice === letras.length && !finalMostrado) {
+                    finalMostrado = true;
+                    setTimeout(finalCinematico, 5000);
+                }
+            }
+        });
+
+    </script>
+
+    <script>
+        function abrirSecreto() {
+            document.getElementById("bloqueSecreto").style.display = "block";
+        }
+
+        function verificarClave() {
+            const correcta = "muak"; // 👈 TU CONTRASEÑA
+            const ingreso = document.getElementById("clave").value;
+
+            if (ingreso === correcta) {
+                document.getElementById("secreto").style.display = "block";
+                lanzarConfeti();              // 🎊 confeti
+                onSecretoDesbloqueado();      // 🎶 activa letras sincronizadas
+            } else {
+                alert("Ups… esa no es 💔 inténtalo otra vez");
+            }
+        }
+    </script>
+
+    <script>
+        function lanzarConfeti() {
+            for (let i = 0; i < 30; i++) {
+                const c = document.createElement("div");
+                c.className = "confeti";
+                c.innerHTML = ["💖", "✨", "💘", "🎉"][Math.floor(Math.random() * 4)];
+                c.style.left = Math.random() * 100 + "vw";
+                c.style.fontSize = (Math.random() * 18 + 12) + "px";
+                document.body.appendChild(c);
+                setTimeout(() => c.remove(), 4000);
+            }
+        }
+    </script>
+
+    <script>
+        function escribirLetraPorLetra(texto, elemento, velocidad = 55) {
+            elemento.textContent = "";
+            let i = 0;
+
+            const intervalo = setInterval(() => {
+                elemento.textContent += texto.charAt(i);
+                i++;
+                if (i >= texto.length) {
+                    clearInterval(intervalo);
+                }
+            }, velocidad);
+        }
+        function finalCinematico() {
+            const final = document.getElementById("final");
+
+            final.style.opacity = "1";
+            final.style.pointerEvents = "auto";
+            final.setAttribute("activo", "");
+
+            // bajar volumen poco a poco
+            let vol = audio.volume;
+            const fade = setInterval(() => {
+                vol -= 0.01;
+                if (vol <= 0.1) {
+                    clearInterval(fade);
+                }
+                audio.volume = vol;
+            }, 200);
+        }
+
+
+        function reiniciarTodo() {
+            const final = document.getElementById("final");
+
+            // oculta final
+            final.style.opacity = "0";
+            final.style.pointerEvents = "none";
+            final.removeAttribute("activo");
+
+            // reinicia letras
+            indice = 0;
+            linea.textContent = "";
+            finalMostrado = false;
+
+            // reinicia música
+            audio.pause();
+            audio.currentTime = 0;
+            audio.volume = 1;
+            audio.play();
+
+            // oculta panel de letras
+            panel.style.display = "none";
+
+            // vuelve al contenido principal
+            document.getElementById("contenido").style.display = "flex";
+        }
+
+
+
+
+    </script>
+
+    <div id="final">
+        <h1>Y si alguna vez dudas...</h1>
+        <p>vuelve aqui🤍</p>
+        <button id="reiniciar" onclick="reiniciarTodo()">Volver a empezar ↺</button>
+
+
+    </div>
+
+
+</body>
+
+</html>

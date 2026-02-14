@@ -1,0 +1,362 @@
+
+:root{
+  --rosa:#ff4d6d;
+  --lila:#b5179e;
+  --durazno:#ffd6e0;
+  --vino:#720026;
+  --oro:#ffd166;
+}
+
+/* Fondo animado con gradiente vivo */
+body{
+  margin:0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(270deg, #ff758c, #ff7eb3, #ffd166, #b5179e);
+  background-size: 800% 800%;
+  animation: fondoVivo 18s ease infinite;
+  overflow:hidden;
+}
+
+/* ===== PANTALLA SORPRESA ===== */
+#sorpresa{
+  position:fixed; inset:0;
+  display:flex; flex-direction:column;
+  justify-content:center; align-items:center;
+  color:white; text-align:center;
+  z-index:10;
+  backdrop-filter: blur(6px);
+}
+
+#sorpresa h1{
+  font-size:28px;
+  letter-spacing:1px;
+  animation: latidoGlow 1.6s infinite;
+}
+
+#sorpresa button{
+  margin-top:22px;
+  padding:16px 34px;
+  font-size:18px;
+  border:none;
+  border-radius:999px;
+  background: linear-gradient(45deg, var(--oro), #fff);
+  color: var(--vino);
+  box-shadow: 0 0 25px rgba(255,209,102,.8);
+  animation: flotarSuave 2.5s ease-in-out infinite;
+}
+
+/* ===== CONTENIDO ===== */
+#contenido{
+  display:none;
+  height:100vh;
+  justify-content:center;
+  align-items:center;
+}
+
+.tarjeta{
+  width:92%; max-width:380px;
+  background: linear-gradient(180deg, #ffffff, #fff0f6);
+  padding:26px;
+  border-radius:28px;
+  text-align:center;
+  box-shadow: 0 20px 40px rgba(0,0,0,.25);
+  animation: zoomEntrada 1.6s ease;
+  position:relative;
+  
+}
+
+/* brillo animado */
+.tarjeta::before{
+  content:"";
+  position:absolute; inset:-2px;
+  border-radius:30px;
+  background: linear-gradient(120deg, transparent, rgba(255,77,109,.35), transparent);
+  animation: brillo 3.5s infinite;
+}
+
+h2{
+  color: var(--rosa);
+  animation: latido 2s infinite;
+}
+
+p{
+  color:#444;
+  line-height:1.6;
+}
+
+/* ===== GALERÍA ===== */
+.galeria{
+  display:flex; justify-content:center; gap:8px; margin:14px 0;
+}
+
+.galeria img{
+  width:95px; height:95px;
+  object-fit:cover;
+  border-radius:18px;
+  box-shadow:0 10px 20px rgba(0,0,0,.2);
+  animation: balanceo 3.5s ease-in-out infinite;
+}
+
+/* ===== BOTONES ===== */
+button{
+  padding:12px 26px;
+  border:none;
+  border-radius:999px;
+  font-size:16px;
+  color:white;
+  background: linear-gradient(45deg, var(--rosa), var(--lila));
+  box-shadow:0 10px 25px rgba(181,23,158,.5);
+  transition: transform .2s;
+}
+
+button:active{ transform: scale(.95); }
+
+/* ===== MENSAJE SECRETO ===== */
+#secreto{
+  display:none;
+  margin-top:14px;
+  font-weight:bold;
+  color: var(--vino);
+  animation: aparecerTexto 1.4s ease;
+}
+
+/* ===== CORAZONES ===== */
+.corazon{
+  position:fixed; bottom:-20px;
+  animation: subirCorazon 7s linear forwards, giro 3s infinite linear;
+  pointer-events:none;
+}
+
+/* ===== DESTELLOS ===== */
+.destello{
+  position:fixed;
+  width:6px; height:6px;
+  background:white;
+  border-radius:50%;
+  opacity:.8;
+  animation: destellar 2s ease-out forwards;
+}
+
+/* ===== ANIMACIONES ===== */
+@keyframes fondoVivo{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@keyframes latido{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.08)}
+}
+@keyframes latidoGlow{
+  0%,100%{transform:scale(1); text-shadow:0 0 10px rgba(255,255,255,.6)}
+  50%{transform:scale(1.1); text-shadow:0 0 25px rgba(255,255,255,1)}
+}
+@keyframes flotarSuave{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+}
+@keyframes zoomEntrada{
+  from{opacity:0; transform:scale(.75)}
+  to{opacity:1; transform:scale(1)}
+}
+@keyframes brillo{
+  from{transform:translateX(-120%)}
+  to{transform:translateX(120%)}
+}
+@keyframes balanceo{
+  0%,100%{transform:rotate(-2deg)}
+  50%{transform:rotate(2deg)}
+}
+@keyframes aparecerTexto{
+  from{opacity:0; transform:translateY(10px)}
+  to{opacity:1; transform:translateY(0)}
+}
+@keyframes subirCorazon{
+  from{transform:translateY(0); opacity:1}
+  to{transform:translateY(-120vh); opacity:0}
+}
+@keyframes giro{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+@keyframes destellar{
+  from{transform:scale(0); opacity:1}
+  to{transform:scale(2); opacity:0}
+}
+/* Interacción al tocar fotos */
+.galeria img{
+  transition: transform .35s ease, box-shadow .35s ease, filter .35s ease;
+  cursor: pointer;
+}
+
+.galeria img.activa{
+  transform: scale(1.2) rotate(2deg);
+  box-shadow: 0 20px 35px rgba(255,77,109,.55);
+  filter: brightness(1.1) saturate(1.2);
+  z-index: 2;
+}
+/* Confeti */
+.confeti{
+  position: fixed;
+  top: -10px;
+  animation: caerConfeti 4s linear forwards, girarConfeti 2s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes caerConfeti{
+  to{ transform: translateY(110vh); opacity:0; }
+}
+@keyframes girarConfeti{
+  from{ transform: rotate(0deg); }
+  to{ transform: rotate(360deg); }
+}
+/* Bloque secreto */
+#bloqueSecreto p{
+  color:#b5179e;
+  font-weight:bold;
+}
+
+#clave{
+  margin:8px 0;
+  width:70%;
+}
+
+#secreto{
+  display:none;
+  margin-top:12px;
+  font-weight:bold;
+  color:#720026;
+  animation: aparecerTexto 1.2s ease;
+}
+
+/* Panel fijo lateral (no usa .tarjeta) */
+#panelLetras{
+  position: fixed;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40%;
+  max-width: 260px;
+  padding: 12px;
+  border-left: 3px solid rgba(255,77,109,.5);
+  background: rgba(255,255,255,.7);
+  backdrop-filter: blur(6px);
+  border-radius: 12px;
+  display: none;
+}
+
+#lineaActual{
+  font-style: italic;
+  color:#5a0f2e;
+  opacity:0;
+}
+
+/* animación */
+
+.nuevaLinea{
+  animation: aparecerLinea 1.2s ease forwards;
+}
+/* Animación para las letras */
+@keyframes aparecerLinea{
+  from{
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to{
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Asegura que el panel se vea encima */
+#panelLetras{
+  z-index: 9999;
+}
+body{
+  background: linear-gradient(-45deg,#1a1a2e,#3a1c71,#d76d77,#ffaf7b);
+  background-size: 400% 400%;
+  animation: fondoVivo 18s ease infinite;
+}
+
+@keyframes fondoVivo{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+#panelLetras{
+  animation: pulso 6s ease-in-out infinite;
+}
+
+@keyframes pulso{
+  0%,100%{box-shadow:0 0 15px rgba(255,182,193,.3)}
+  50%{box-shadow:0 0 30px rgba(255,182,193,.6)}
+}
+.foto{
+  transition: transform .5s ease, box-shadow .5s ease;
+}
+
+.foto:active{
+  transform: scale(1.08) rotate(-1deg);
+  box-shadow:0 15px 35px rgba(0,0,0,.5);
+}
+#final{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.85);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 3s ease;
+  z-index: 10000;
+}
+
+#final h1{
+  font-size: 2rem;
+  color: #ffd1dc;
+  margin-bottom: .5em;
+  animation: subir 3s ease;
+}
+
+#final p{
+  font-size: 1.2rem;
+  color: #fff;
+  opacity: .85;
+  animation: aparecerLinea 4s ease;
+}
+
+@keyframes subir{
+  from{transform: translateY(30px); opacity:0}
+  to{transform: translateY(0); opacity:1}
+}
+#reiniciar{
+  margin-top: 2em;
+  padding: .7em 1.5em;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.4);
+  color: #fff;
+  font-size: .9rem;
+  letter-spacing: 1px;
+  border-radius: 30px;
+  cursor: pointer;
+  opacity: 0;
+  transition: all .6s ease;
+}
+
+/* aparece con delay */
+#final[activo] #reiniciar{
+  opacity: 1;
+}
+
+/* hover / touch */
+#reiniciar:hover,
+#reiniciar:active{
+  background: rgba(255,255,255,.15);
+  transform: scale(1.05);
+}
+
+
+
